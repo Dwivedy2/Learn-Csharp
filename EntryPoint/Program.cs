@@ -1,14 +1,19 @@
 ﻿using PointsAndLines;
+using System;
 class EntryPoint
 {
     static void Main()
     {
-        Point p = new Point();
-        p.x = 1;
-        p.y = 3;
+        Point p = new Point(5, 9);
 
-        Console.WriteLine(p.x);
-        Console.WriteLine(p.y);
+        Point p2 = new Point();
+        p2.X = 3;
+        p2.Y = 66;
+
+        Console.WriteLine(p.X);
+        Console.WriteLine(p.Y);
+
+        Console.WriteLine(p2.X + ", " + p2.Y);
         Console.ReadLine();
     }
 }
