@@ -1,6 +1,7 @@
 ﻿using PointsAndLines;
 using EntryPoint.User;
 using EntryPoint.StaticInCsharp;
+using EntryPoint.ConstantsCsharp;
 using System;
 class Practice
 {
@@ -22,11 +23,22 @@ class Practice
         // shape.name = "rectangle"; // not allowed
         Shape.name = "Square";
 
+        // Static members are shared between every instance of classes
+
         Shape triangle = new Shape();
         Console.WriteLine(Shape.name); // Triangle
 
         Shape rectangle = new Shape("Rectangle");
         Console.WriteLine(Shape.name); // Rectangle
+
+        Console.WriteLine(Shape.numberOfShapes); // 3 (Square, Triangle, Rectangle)
+
+        // Constants in CSharp
+        CUsers cu1 = new CUsers();
+        CUsers cu2 = new CUsers();
+
+        Console.WriteLine(cu1.id); // 1
+        Console.WriteLine(cu2.id); // 2
 
         Console.ReadLine();
     }
