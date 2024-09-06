@@ -7,13 +7,13 @@ class EntryPoint
         Point p = new Point(5, 9);
 
         Point p2 = new Point();
-        p2.x = 3;
-        p2.y = 66;
+        p2.X = 34444;
+        p2.Y = 66333;
 
-        Console.WriteLine(p.x);
-        Console.WriteLine(p.y);
+        Console.WriteLine(p.X);
+        Console.WriteLine(p.Y);
 
-        Console.WriteLine(p2.x + ", " + p2.y);
+        Console.WriteLine(p2.X + ", " + p2.Y);
         Console.ReadLine();
     }
 }
