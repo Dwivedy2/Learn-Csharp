@@ -21,7 +21,13 @@ class Practice
         shape.height = 5;
         // shape.name = "rectangle"; // not allowed
         Shape.name = "Square";
-        
+
+        Shape triangle = new Shape();
+        Console.WriteLine(Shape.name); // Triangle
+
+        Shape rectangle = new Shape("Rectangle");
+        Console.WriteLine(Shape.name); // Rectangle
+
         Console.ReadLine();
     }
 }
