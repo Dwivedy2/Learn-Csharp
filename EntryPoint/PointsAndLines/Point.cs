@@ -2,8 +2,8 @@
 {
     public class Point
     {
-        public int X;
-        public int Y;
+        public int x;
+        public int y;
 
         // Constructors in C#
         // Default 
@@ -15,8 +15,8 @@
         // Parameterised
         public Point(int x, int y)
         {
-            X = x;
-            Y = y;
+            this.x = x;
+            this.y = y;
         }
 
 
