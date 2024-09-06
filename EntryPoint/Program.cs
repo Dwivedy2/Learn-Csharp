@@ -1,6 +1,7 @@
 ﻿using PointsAndLines;
+using EntryPoint.User;
 using System;
-class EntryPoint
+class Practice
 {
     static void Main()
     {
@@ -10,10 +11,16 @@ class EntryPoint
         p2.X = 34444;
         p2.Y = 66333;
 
-        Console.WriteLine(p.X);
-        Console.WriteLine(p.Y);
+        //Console.WriteLine(p.X);
+        //Console.WriteLine(p.Y);
 
-        Console.WriteLine(p2.X + ", " + p2.Y);
+        //Console.WriteLine(p2.X + ", " + p2.Y);
+
+        User user = new User();
+        user.Username = "user";
+        user.Password = "pass";
+
+        Console.WriteLine($"Username: {user.Username}\nPassword: {user.Password}");
         Console.ReadLine();
     }
 }
