@@ -1,5 +1,6 @@
 ﻿using PointsAndLines;
 using EntryPoint.User;
+using EntryPoint.StaticInCsharp;
 using System;
 class Practice
 {
@@ -11,16 +12,16 @@ class Practice
         p2.X = 34444;
         p2.Y = 66333;
 
-        //Console.WriteLine(p.X);
-        //Console.WriteLine(p.Y);
-
-        //Console.WriteLine(p2.X + ", " + p2.Y);
-
         User user = new User();
         user.Username = "user";
         user.Password = "pass";
 
-        Console.WriteLine($"Username: {user.Username}\nPassword: {user.Password}");
+        Shape shape = new Shape();
+        shape.width = 5;
+        shape.height = 5;
+        // shape.name = "rectangle"; // not allowed
+        Shape.name = "Square";
+        
         Console.ReadLine();
     }
 }
