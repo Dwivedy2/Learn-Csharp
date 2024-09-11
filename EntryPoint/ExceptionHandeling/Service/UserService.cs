@@ -11,6 +11,13 @@ namespace EntryPoint.ExceptionHandeling.Service
 
         public GetCommonUserResult GetUserById(int id)
         {
+            bool isValid = ValidateId(id);
+
+            if (!isValid)
+            {
+                throw new ArgumentException("Invalid Id.");
+            }
+
             CommonUser resUser = users.Find(user => user.Id == id);
             GetCommonUserResult result;
             if (resUser != null)
@@ -22,6 +29,11 @@ namespace EntryPoint.ExceptionHandeling.Service
                 result = GetCommonUserResult.Error(id);
             }
             return result;
+        }
+
+        public bool ValidateId(int id)
+        {
+            return (id <= 0 && id > users.Count());
         }
     }
 }

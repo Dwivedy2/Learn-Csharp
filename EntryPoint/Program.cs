@@ -50,8 +50,16 @@ class Practice
 
         try
         {
-            GetCommonUserResult sUser = service.GetUserById(id);
-            Console.WriteLine($"Found user: {sUser.User.Name}");
+            try
+            {
+                GetCommonUserResult sUser = service.GetUserById(id);
+                Console.WriteLine($"Found user: {sUser.User.Name}");
+            }
+            catch (ArgumentException argEx)
+            {
+                Console.WriteLine(argEx.Message);
+                throw argEx;
+            }
         }
         catch (Exception)
         {
