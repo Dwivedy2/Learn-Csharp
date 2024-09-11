@@ -55,17 +55,30 @@ class Practice
                 GetCommonUserResult sUser = service.GetUserById(id);
                 Console.WriteLine($"Found user: {sUser.User.Name}");
             }
+            catch(CustomExceptionHandel cusExHdl)
+            {
+                Console.WriteLine(cusExHdl.CustomMessage);
+            }
             catch (ArgumentException argEx)
             {
-                Console.WriteLine(argEx.Message);
+                Console.WriteLine(argEx.Message); // Invalid Id, that we passed in user service class
                 throw argEx;
+            }
+            catch(InvalidOperationException)
+            {
+                Console.WriteLine("Invalid access to user from null reference sUser"); // if null user is passed
             }
         }
         catch (Exception)
         {
-            Console.WriteLine("An unexpected error occured.");
+            Console.WriteLine("An unexpected error occured."); // handel all the exception throw above
             throw;
         }
+        finally
+        {
+            Console.WriteLine("Closing database connection."); // execute after program crash
+        }
+        Console.WriteLine("Testing purpose."); // not execute, if throw statement is used.
 
         Console.ReadLine();
     }

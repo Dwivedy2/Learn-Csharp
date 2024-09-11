@@ -13,6 +13,11 @@ namespace EntryPoint.ExceptionHandeling.Service
         {
             bool isValid = ValidateId(id);
 
+            if(id == 100)
+            {
+                throw new CustomExceptionHandel($"User id: {id} is already reserved, you cannot use this.");
+            }
+
             if (!isValid)
             {
                 throw new ArgumentException("Invalid Id.");
