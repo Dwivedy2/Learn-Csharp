@@ -55,11 +55,11 @@ class Practice
                 GetCommonUserResult sUser = service.GetUserById(id);
                 Console.WriteLine($"Found user: {sUser.User.Name}");
             }
-            catch(CustomExceptionHandel cusExHdl)
+            catch(CustomExceptionHandel cusExHdl) when (id < -1)
             {
                 Console.WriteLine(cusExHdl.CustomMessage);
             }
-            catch (ArgumentException argEx)
+            catch (ArgumentException argEx) when (id < -2)
             {
                 Console.WriteLine(argEx.Message); // Invalid Id, that we passed in user service class
                 throw argEx;
