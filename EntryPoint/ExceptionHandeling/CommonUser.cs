@@ -1,4 +1,6 @@
-﻿namespace EntryPoint.ExceptionHandeling
+﻿using EntryPoint.Enums;
+
+namespace EntryPoint.ExceptionHandeling
 {
     public class CommonUser
     {
@@ -6,6 +8,7 @@
         public string? Name { get; set; }
 
         private static int _id = 0;
+        public Race race;
         public CommonUser() 
         {
             _id++;

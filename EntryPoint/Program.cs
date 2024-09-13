@@ -5,6 +5,7 @@ using EntryPoint.ConstantsCsharp;
 using EntryPoint.ExceptionHandeling.Service;
 using EntryPoint.ExceptionHandeling;
 using EntryPoint.ExceptionHandeling.HandelResults;
+using EntryPoint.Enums;
 
 class Practice
 {
@@ -44,10 +45,9 @@ class Practice
         // Console.WriteLine(cu2.id); // 2
 
         // EXCEPTION HANDELING
-
+/*
         int id = Convert.ToInt32(Console.ReadLine());
         UserService service = new UserService();
-
         try
         {
             try
@@ -79,6 +79,9 @@ class Practice
             Console.WriteLine("Closing database connection."); // execute after program crash
         }
         Console.WriteLine("Testing purpose."); // not execute, if throw statement is used.
+*/
+
+        EnumController.MakeUser(Race.Marsian);
 
         Console.ReadLine();
     }
