@@ -6,6 +6,7 @@ using EntryPoint.ExceptionHandeling.Service;
 using EntryPoint.ExceptionHandeling;
 using EntryPoint.ExceptionHandeling.HandelResults;
 using EntryPoint.Enums;
+using EntryPoint.StaticClasses;
 
 class Practice
 {
@@ -82,6 +83,8 @@ class Practice
 */
 
         EnumController.MakeUser(Race.Marsian);
+
+        Utilities.ColorfulWriteLine("Hello, RED", ConsoleColor.Red);
 
         Console.ReadLine();
     }
