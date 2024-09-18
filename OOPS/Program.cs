@@ -4,6 +4,10 @@ public class Startup
 {
     public static void Main()
     {
-        ExtentionMethods.Start();
+        // Extention methods
+        // ExtentionMethods.Start();
+
+        // Anonymous Classes
+        AnonymousObjectsAndNullable.Start();
     }
 }
