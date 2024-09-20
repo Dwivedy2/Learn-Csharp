@@ -8,6 +8,9 @@ public class Startup
         // ExtentionMethods.Start();
 
         // Anonymous Classes
-        AnonymousObjectsAndNullable.Start();
+        // AnonymousObjectsAndNullable.Start();
+
+        // Inheritance
+        Inheritance.Start();
     }
 }
