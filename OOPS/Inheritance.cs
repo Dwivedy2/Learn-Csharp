@@ -18,6 +18,18 @@
             JSONFormatter jsonFormatter = new JSONFormatter("ToolKit.xlx");
 
             jsonFormatter.Format();
+
+            // Assigning the objects of child class to parent
+            writter = new XMLFormatter("demo.txt"); // allowed
+
+            // XMLFormatter x1 = new Write("demo.txt"); // not allowed
+            
+            // Although the parent object can point to child object
+            // but the parent object can only access its class methods
+            // and not the child methods.
+
+            // writter.ShowFile(); // not allowed
+
         }
     }
 
@@ -67,6 +79,12 @@
         public new void Format()
         {
             Console.WriteLine($"file {this.FileName} is written to XML format");
+        }
+
+        // A function of XMLFormatter class
+        public void ShowFile()
+        {
+            Console.WriteLine("filename: " + this.FileName);
         }
     }
 
