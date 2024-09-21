@@ -11,6 +11,9 @@ public class Startup
         // AnonymousObjectsAndNullable.Start();
 
         // Inheritance
-        Inheritance.Start();
+        // Inheritance.Start();
+
+        // Interfaces
+        Interfaces.Start();
     }
 }
