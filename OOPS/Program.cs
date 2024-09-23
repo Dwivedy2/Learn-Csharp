@@ -17,6 +17,9 @@ public class Startup
         // Interfaces.Start();
 
         // Abstract Classes
-        AbstractClasses.Start();
+        // AbstractClasses.Start();
+
+        // Generics
+        Generics.Start();
     }
 }
