@@ -14,6 +14,9 @@ public class Startup
         // Inheritance.Start();
 
         // Interfaces
-        Interfaces.Start();
+        // Interfaces.Start();
+
+        // Abstract Classes
+        AbstractClasses.Start();
     }
 }
