@@ -20,6 +20,9 @@ public class Startup
         // AbstractClasses.Start();
 
         // Generics
-        Generics.Start();
+        // Generics.Start();
+
+        // Generic Lists
+        GenericLists.Start();
     }
 }
