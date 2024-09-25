@@ -23,6 +23,9 @@ public class Startup
         // Generics.Start();
 
         // Generic Lists
-        GenericLists.Start();
+        // GenericLists.Start();
+
+        // Delegates
+        Delegates.Start();
     }
 }
