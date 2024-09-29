@@ -1,44 +1,32 @@
+using AccountOwnerServer.Extentions;
+using AccountOwnerServer.Constants;
+using Microsoft.AspNetCore.HttpOverrides;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-// This policy name will be used to allow CORS
-const string POLICY_NAME = "CorsPolicy";
-
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy(name: POLICY_NAME, builder =>
-//    {
-//        builder.AllowAnyOrigin()
-//            .AllowAnyMethod()
-//            .AllowAnyHeader();
-//    });
-//});
-
-// Only single policy is ok, use default one
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(builder =>
-    {
-        builder.AllowAnyOrigin()
-        .AllowAnyHeader()
-        .AllowAnyMethod();
-    });
-});
+builder.Services.ConfigureCors(Constants.POLICY_NAME);
+builder.Services.ConfigureIISIntegration();
 
 builder.Services.AddControllers();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+    app.UseDeveloperExceptionPage();
+else 
+    app.UseHsts();
 
-// Policy name is passed, this way is prefered when having multiple policies
-// app.UseCors(POLICY_NAME);
-
-// For default cors
-app.UseCors();
-
+// If no policyname is specified, app.UseCors();
 app.UseHttpsRedirection();
+
+app.UseStaticFiles();
+
+app.UseForwardedHeaders(new ForwardedHeadersOptions { ForwardedHeaders = ForwardedHeaders.All });
+
+app.UseCors(Constants.POLICY_NAME);
 
 app.UseAuthorization();
 
