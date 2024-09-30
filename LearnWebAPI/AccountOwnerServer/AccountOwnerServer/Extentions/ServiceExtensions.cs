@@ -1,4 +1,7 @@
-﻿namespace AccountOwnerServer.Extentions
+﻿using Contracts;
+using LoggerService;
+
+namespace AccountOwnerServer.Extentions
 {
     public static class ServiceExtensions
     {
@@ -29,6 +32,11 @@
             //        .AllowAnyMethod();
             //    });
             //});
+        }
+        
+        public static void ConfigureLogging(this IServiceCollection services)
+        {
+            services.AddSingleton<ILoggerManager, LoggerManager>();
         }
     }
 }

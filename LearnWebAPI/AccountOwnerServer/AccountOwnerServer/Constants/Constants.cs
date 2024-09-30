@@ -2,6 +2,6 @@
 {
     public class Constants
     {
-        public static const string POLICY_NAME = "CorsPolicy";
+        public static string POLICY_NAME = "CorsPolicy";
     }
 }

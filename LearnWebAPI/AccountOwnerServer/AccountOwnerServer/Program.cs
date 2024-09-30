@@ -1,13 +1,18 @@
 using AccountOwnerServer.Extentions;
 using AccountOwnerServer.Constants;
 using Microsoft.AspNetCore.HttpOverrides;
+using NLog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//LogManager.LoadConfiguration(Directory.GetCurrentDirectory() + "/nlog.config");
+LogManager.Setup().LoadConfigurationFromFile(string.Concat(Directory.GetCurrentDirectory(), "nlog.config"));
 
 // Add services to the container.
 
 builder.Services.ConfigureCors(Constants.POLICY_NAME);
 builder.Services.ConfigureIISIntegration();
+builder.Services.ConfigureLogging();
 
 builder.Services.AddControllers();
 
