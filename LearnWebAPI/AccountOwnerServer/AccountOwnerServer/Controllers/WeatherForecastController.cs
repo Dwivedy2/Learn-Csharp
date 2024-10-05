@@ -8,21 +8,19 @@ namespace AccountOwnerServer.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private readonly ILoggerManager _logger;
-        public WeatherForecastController(ILoggerManager logger)
+        private readonly IRepositoryWrapper _repository;
+        public WeatherForecastController(IRepositoryWrapper repositoryWrapper)
         {
-            _logger = logger;
+            _repository = repositoryWrapper;
         }
 
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            _logger.LogInfo("Logged Info");
-            _logger.LogDebug("Logged Info");
-            _logger.LogWarning("Logged Info");
-            _logger.LogError("Logged Error");
+            var domesticAccounts = _repository.Account.FindByCondition(x => x.AccountType == "Domestic");
+            var owner = _repository.Owner.FindAll();
 
-            return new[] { "Climate", "Weather" };
+            return new[] { "Value1", "Value2" };
         }
     }
 }

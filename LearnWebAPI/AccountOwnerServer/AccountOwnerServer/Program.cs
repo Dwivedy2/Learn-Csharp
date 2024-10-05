@@ -2,6 +2,7 @@ using AccountOwnerServer.Extentions;
 using AccountOwnerServer.Constants;
 using Microsoft.AspNetCore.HttpOverrides;
 using NLog;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,8 @@ LogManager.Setup().LoadConfigurationFromFile(string.Concat(Directory.GetCurrentD
 builder.Services.ConfigureCors(Constants.POLICY_NAME);
 builder.Services.ConfigureIISIntegration();
 builder.Services.ConfigureLogging();
+builder.Services.ConfigureMySqlContext(builder.Configuration);
+builder.Services.ConfigureRepositoryWrapper();
 
 builder.Services.AddControllers();
 
