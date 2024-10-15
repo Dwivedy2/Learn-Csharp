@@ -3,6 +3,8 @@ using Entities;
 using LoggerService;
 using Microsoft.EntityFrameworkCore;
 using Repository;
+using Microsoft.OpenApi.Models;
+using AutoMapper;
 
 namespace AccountOwnerServer.Extentions
 {
@@ -36,6 +38,19 @@ namespace AccountOwnerServer.Extentions
             //    });
             //});
         }
+
+        public static void ConfigureSwagger(this IServiceCollection services)
+        {
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "AccountOwner",
+                });
+            });
+        }
         
         public static void ConfigureLogging(this IServiceCollection services)
         {
@@ -53,6 +68,11 @@ namespace AccountOwnerServer.Extentions
         public static void ConfigureRepositoryWrapper(this IServiceCollection services)
         {
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+        }
+
+        public static void ConfigureAutoMapper(this IServiceCollection services)
+        {
+            services.AddAutoMapper(typeof(Program));
         }
     }
 }

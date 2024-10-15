@@ -3,6 +3,7 @@ using AccountOwnerServer.Constants;
 using Microsoft.AspNetCore.HttpOverrides;
 using NLog;
 using System.Reflection;
+using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,10 +13,12 @@ LogManager.Setup().LoadConfigurationFromFile(string.Concat(Directory.GetCurrentD
 // Add services to the container.
 
 builder.Services.ConfigureCors(Constants.POLICY_NAME);
+builder.Services.ConfigureSwagger();
 builder.Services.ConfigureIISIntegration();
 builder.Services.ConfigureLogging();
 builder.Services.ConfigureMySqlContext(builder.Configuration);
 builder.Services.ConfigureRepositoryWrapper();
+builder.Services.ConfigureAutoMapper();
 
 builder.Services.AddControllers();
 
@@ -23,7 +26,15 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
+{
     app.UseDeveloperExceptionPage();
+    app.UseSwagger();
+    app.UseSwaggerUI(options => // UseSwaggerUI is called only in Development.
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+        options.RoutePrefix = string.Empty;
+    });
+}
 else 
     app.UseHsts();
 

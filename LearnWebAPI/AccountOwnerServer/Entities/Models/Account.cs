@@ -6,7 +6,8 @@ namespace Entities
     [Table("account")]
     public class Account
     {
-        public Guid AccountId { get; set; }
+        [Column("AccountId")]
+        public Guid Id { get; set; }
         public DateTime DateCreated { get; set; }
         public string? AccountType { get; set; }
 
