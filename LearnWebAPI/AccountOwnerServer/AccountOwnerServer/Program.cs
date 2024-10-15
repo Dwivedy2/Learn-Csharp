@@ -2,8 +2,6 @@ using AccountOwnerServer.Extentions;
 using AccountOwnerServer.Constants;
 using Microsoft.AspNetCore.HttpOverrides;
 using NLog;
-using System.Reflection;
-using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
