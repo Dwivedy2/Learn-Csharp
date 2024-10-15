@@ -23,9 +23,6 @@ namespace Repository
         public IQueryable<T> FindByCondition(Expression<Func<T, bool>> condition) => 
             RepositoryContext.Set<T>().Where(condition).AsNoTracking();
 
-        public void Update(T entity)
-        {
-            throw new NotImplementedException();
-        }
+        public void Update(T entity) => RepositoryContext?.Set<T>().Update(entity);
     }
 }

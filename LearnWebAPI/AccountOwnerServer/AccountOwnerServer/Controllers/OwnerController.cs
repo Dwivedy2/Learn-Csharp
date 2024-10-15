@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Contracts;
 using Entities.DataTransferObjects;
+using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AccountOwnerServer.Controllers
@@ -41,7 +42,7 @@ namespace AccountOwnerServer.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "OwnerById")]
         public IActionResult GetOwner(Guid id)
         {
             try
@@ -50,7 +51,7 @@ namespace AccountOwnerServer.Controllers
 
                 if (owner == null)
                 {
-                    return NoContent();
+                    return NotFound();
                 }
 
                 var ownerResult = _mapper.Map<OwnerDto>(owner);
@@ -79,12 +80,110 @@ namespace AccountOwnerServer.Controllers
 
                 var ownerResult = _mapper.Map<OwnerDto>(owner);
 
-                return Ok(ownerResult);
+                return Ok(new { value = ownerResult, message = "Owner found"});
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Internal Server Error occured, {ex.Message}");
                 return StatusCode(500, new { value = "Internal server error", message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public IActionResult CreateOwner([FromBody]OwnerForCreationDto owner)
+        {
+            try
+            {
+                if (owner is null)
+                {
+                    return BadRequest(new { value = owner, message = "owner object is null" });
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(new { value = ModelState, message = "model state is not valid" });
+                }
+
+                var mappedOwner = _mapper.Map<Owner>(owner);
+
+                _repository.Owner.CreateOwner(mappedOwner);
+
+                _repository.Save();
+
+                return StatusCode(201, new { value = owner, message = "Owner successfully created" });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Internal server error, {ex.Message}");
+                return StatusCode(500, new { value = "", message = ex.Message });
+            }
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateOwner(Guid id, [FromBody]OwnerForUpdateDto owner)
+        {
+            try
+            {
+                if (owner is null)
+                {
+                    return BadRequest(new { value = owner, message = "owner object can not be null" });
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(new { value = ModelState, message = "model state is not valid" });
+                }
+
+                var dbOwner = _repository.Owner.GetOwner(id);
+
+                if (dbOwner is null)
+                {
+                    return NotFound(new { value = dbOwner, message = "owner is not registered." });
+                }
+
+                _mapper.Map(owner, dbOwner);
+
+                _repository.Owner.UpdateOwner(dbOwner);
+
+                _repository.Save();
+
+                return Ok(new { value = owner, message = "Owner is updated successfully" });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Internal Server Error, {ex.Message}");
+                return StatusCode(500, new { value = "", message = ex.Message });
+            }
+
+        }
+
+        [HttpDelete("{id}/delete")]
+        public IActionResult DeleteOwner(Guid id)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(new { value = ModelState, message = "model state is not valid" });
+                }
+
+                var dbOwner = _repository.Owner.GetOwner(id);
+
+                if (dbOwner is null)
+                {
+                    return BadRequest(new { value = dbOwner, message = $"Id is invalid, owner do not exists for this id {id}" });
+                }
+
+                _repository.Owner.DeleteOwner(dbOwner);
+
+                _repository.Save();
+
+                return Ok(new { value = dbOwner, message = "Owner deleted successfully"});
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Internal Server Error, {ex.Message}");
+                return StatusCode(500, new { value = "", message = ex.Message});
             }
         }
     }

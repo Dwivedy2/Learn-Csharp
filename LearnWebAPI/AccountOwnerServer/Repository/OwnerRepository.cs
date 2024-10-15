@@ -2,12 +2,23 @@
 using Entities;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
+using Entities.DataTransferObjects;
 
 namespace Repository
 {
     public class OwnerRepository : RepositoryBase<Owner>, IOwnerRepository
     {
         public OwnerRepository(RepositoryContext context) : base(context) { }
+
+        public void CreateOwner(Owner owner)
+        {
+            Create(owner);
+        }
+
+        public void DeleteOwner(Owner owner)
+        {
+            Delete(owner);
+        }
 
         public IEnumerable<Owner> GetAllOwners()
         {
@@ -27,6 +38,11 @@ namespace Repository
             return FindByCondition(ow => ow.Id.Equals(id))
                     .Include(ac => ac.Accounts)
                     .FirstOrDefault();
+        }
+
+        public void UpdateOwner(Owner owner)
+        {
+            Update(owner);
         }
     }
 }
