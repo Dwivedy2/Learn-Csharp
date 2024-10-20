@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using Todo.DTOs;
+using Todo.DTOs.Todos;
+using Todo.DTOs.Users;
 using Todo.Entities;
 
 namespace Todo
@@ -10,6 +11,8 @@ namespace Todo
         {
             CreateMap<AddDto, ToDos>();
             CreateMap<UpdateDto, ToDos>();
+            CreateMap<GetUserDetailDto, User>().ReverseMap();
+            CreateMap<GetTodoDto, ToDos>().ReverseMap();
         }
     }
 }

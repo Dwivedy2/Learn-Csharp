@@ -11,5 +11,6 @@ namespace Todo
         }
 
         public DbSet<ToDos> ToDos { get; set; }
+        public DbSet<User> User { get; set; }
     }
 }

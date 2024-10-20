@@ -8,7 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.ConfigureCors();
 builder.Services.ConfigureSwaggerDoc();
 builder.Services.ConfigureDatabase(builder.Configuration);
-builder.Services.ConfigureTodoRepo();
+//builder.Services.ConfigureTodoRepo();
+//builder.Services.ConfigureUserRepo();
+builder.Services.ConfigureRepoWrapper();
 builder.Services.ConfigureAutoMapper();
 builder.Services.AddControllers();
 

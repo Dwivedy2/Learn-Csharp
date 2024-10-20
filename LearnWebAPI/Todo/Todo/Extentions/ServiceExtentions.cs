@@ -43,9 +43,19 @@ namespace Todo.Extentions
             });
         }
 
-        public static void ConfigureTodoRepo(this IServiceCollection services)
+        //public static void ConfigureTodoRepo(this IServiceCollection services)
+        //{
+        //    services.AddScoped<ITodoRepo, ToDoRepo>();
+        //}
+
+        //public static void ConfigureUserRepo(this IServiceCollection services)
+        //{
+        //    services.AddScoped<IUserRepo, UserRepo>();
+        //}
+
+        public static void ConfigureRepoWrapper(this IServiceCollection services)
         {
-            services.AddScoped<ITodoRepo, ToDoRepo>();
+            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
         }
 
         public static void ConfigureAutoMapper(this IServiceCollection services)

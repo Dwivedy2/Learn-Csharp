@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Todo.Contracts;
 using Todo.DTOs;
+using Todo.DTOs.Todos;
 using Todo.Entities;
 
 namespace Todo.Controllers
@@ -10,11 +11,11 @@ namespace Todo.Controllers
     [ApiController]
     public class ToDoController : ControllerBase
     {
-        ITodoRepo _todoRepo;
+        IRepositoryWrapper _repo;
         IMapper _mapper;
-        public ToDoController(ITodoRepo todoRepo, IMapper mapper)
+        public ToDoController(IRepositoryWrapper repo, IMapper mapper)
         {
-            _todoRepo = todoRepo;
+            _repo = repo;
             _mapper = mapper;
         }
 
@@ -23,7 +24,7 @@ namespace Todo.Controllers
         {
             try
             {
-                var allTodos = _todoRepo.GetAllTodos();
+                var allTodos = _repo.Todos.GetAllTodos();
                 return Ok(new ReturnObject(allTodos, "Data fetched successfully"));
             }
             catch (Exception ex)
@@ -42,7 +43,7 @@ namespace Todo.Controllers
 
             try
             {
-                var todoItem = _todoRepo.GetTodoById(id);
+                var todoItem = _repo.Todos.GetTodoById(id);
 
                 if (todoItem == null)
                 {
@@ -69,9 +70,11 @@ namespace Todo.Controllers
             {
                 var todoItem = _mapper.Map<ToDos>(todoDto);
 
-                _todoRepo.AddTodo(todoItem);
+                todoItem.CreatedDate = DateTime.Now;
 
-                _todoRepo.Save();
+                _repo.Todos.AddTodo(todoItem);
+
+                _repo.Save();
 
                 return Created("add", new ReturnObject(todoDto, "Todo created."));
             }
@@ -91,7 +94,7 @@ namespace Todo.Controllers
 
             try
             {
-                var dbTodo = _todoRepo.GetTodoById(id);
+                var dbTodo = _repo.Todos.GetTodoById(id);
 
                 if (dbTodo == null)
                 {
@@ -100,9 +103,11 @@ namespace Todo.Controllers
 
                 _mapper.Map(todoDto, dbTodo);
 
-                _todoRepo.UpdateTodo(dbTodo);
+                dbTodo.UpdatedDate = DateTime.Now;
 
-                _todoRepo.Save();
+                _repo.Todos.UpdateTodo(dbTodo);
+
+                _repo.Save();
 
                 return Created("updated", new ReturnObject(todoDto, "Todo updated."));
             }
@@ -117,16 +122,16 @@ namespace Todo.Controllers
         {
             try
             {
-                var dbTodo = _todoRepo.GetTodoById(id);
+                var dbTodo = _repo.Todos.GetTodoById(id);
 
                 if (dbTodo == null)
                 {
                     return NotFound(new ReturnObject(null, "Invalid id"));
                 }
 
-                _todoRepo.DeleteTodo(dbTodo);
+                _repo.Todos.DeleteTodo(dbTodo);
 
-                _todoRepo.Save();
+                _repo.Save();
 
                 return Ok(new ReturnObject(null, "Todo Deleted Successfully"));
             }
