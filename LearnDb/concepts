@@ -1,0 +1,15 @@
+Normalizing a database - removing redundancy
+
+1nf - removing redundant groups
+2nf - eliminate redundant data
+3nf - eliminate columns not dependent on key
+4nf - isolate independent multiple relationships
+5nf - isolate semantically related multiple relationships
+
+/// Meta Information ///
+C:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\MSSQL\DATA\
+	 - content - .mdf file and .ldf file
+	 .mdf - store content
+	 .ldf - store logs
+	 
+	 
