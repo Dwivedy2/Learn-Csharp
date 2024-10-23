@@ -12,4 +12,59 @@ C:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\MSSQL\DATA\
 	 .mdf - store content
 	 .ldf - store logs
 	 
+------------------------------------------------------------------------------------------
 	 
+*** Databases Languages
+
+1. DDL - Data Definition Language
+2. DML - Data Manipulation Language
+3. DCL - Data Control Language
+4. TCL - Transaction Control Language
+
+DDL
+- CREATE
+- ALTER - Changes Data
+- DROP - Delete Schema
+- TRUNCATE - Delete records
+- RENAME
+- COMMENT
+
+DML
+- SELECT
+- INSERT
+- UPDATE
+- DELETE
+- MERGE - UPSERT( update and insert )
+- CALL - PL/SQL
+- LOCK TABLE - Concurrency control
+	- multiple users performaing CRUD over a single resource is called as concurrency
+
+DCL
+- GRANT - permission(INSERT, SELECT..)
+- REVOKE - permission(INSERT, SELECT..)
+
+TCL
+- rollback - undo change
+- commit - save change
+- save point - temp save change
+
+---------------------------------------------------------------------------------------------------
+
+*** 3 Tier Architecture
+
+External Layer	
+	^
+	|
+Concetual Layer	
+	^
+	|
+Physical Layer
+
+
+all layers are inter-related and independent
+
+Physical layer - how data is stored - location
+Concetual Layer	- What data is stored - (name, age, etc..)
+External Layer - View of data
+
+change in any layer should not effect other
