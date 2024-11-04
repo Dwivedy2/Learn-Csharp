@@ -32,11 +32,6 @@ namespace Todo.Repository
             return context.ToDos.FirstOrDefault(t => t.Id == id);
         }
 
-        public void Save()
-        {
-            context.SaveChanges();
-        }
-
         public void UpdateTodo(ToDos todo)
         {
             context.Update(todo);

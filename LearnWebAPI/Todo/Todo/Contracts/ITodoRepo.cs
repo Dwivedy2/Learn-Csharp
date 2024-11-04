@@ -9,6 +9,5 @@ namespace Todo.Contracts
         void AddTodo(ToDos todo);
         void UpdateTodo(ToDos todo);
         void DeleteTodo(ToDos toDo);
-        void Save();
     }
 }
