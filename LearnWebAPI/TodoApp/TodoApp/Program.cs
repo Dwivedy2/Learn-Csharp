@@ -17,6 +17,7 @@ var app = builder.Build();
 app.ConfigureSwaggerDoc();
 
 // Configure the HTTP request pipeline.
+app.UseCors("DefaultPolicy");
 
 app.UseHttpsRedirection();
 
