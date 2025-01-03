@@ -11,6 +11,8 @@ builder.Services.ConfigureSwaggerGen();
 builder.Services.ConfigureDbContext(builder.Configuration);
 // CORS
 builder.Services.ConfigureCORS("DefaultPolicy");
+// Services
+builder.Services.ConfigureRepoServices();
 
 var app = builder.Build();
 

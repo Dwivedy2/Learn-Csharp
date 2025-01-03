@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Database;
+using Contract;
+using Repository;
 
 namespace TodoApp.Extentions
 {
@@ -40,6 +42,12 @@ namespace TodoApp.Extentions
                     .AllowAnyMethod();
                 });
             });
+        }
+
+        // Repositories
+        public static void ConfigureRepoServices(this IServiceCollection services)
+        {
+            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
         }
     }
 }
