@@ -9,5 +9,15 @@ namespace Repository
         public TodoItemsRepository(ApplicationContext context) : base(context)
         {     
         }
+
+        public async Task<IEnumerable<TodoItem>> GetAllItemsAsync()
+        {
+            return await GetAllAsync();
+        }
+
+        public async Task<TodoItem> GetItemByIdAsync(Guid id)
+        {
+            return await GetByIdAsync(id);
+        }
     }
 }

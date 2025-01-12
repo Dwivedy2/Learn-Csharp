@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
-    public class RepositoryBase<T> : IRepositoryBase<T> where T : class
+    public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
         private readonly ApplicationContext _context;
         public RepositoryBase(ApplicationContext context)
@@ -24,8 +24,6 @@ namespace Repository
         public async Task<IEnumerable<T>> GetAllAsync() => await _context.Set<T>().ToListAsync();
 
         public async Task<T?> GetByIdAsync(Guid id) => await _context.Set<T>().FindAsync(id);
-
-        public async Task SaveChangesAsync() => await _context.SaveChangesAsync();
 
         public void Update(T entity) => _context.Set<T>().Update(entity);
     }

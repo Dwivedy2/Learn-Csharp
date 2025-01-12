@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Database;
 using Contract;
 using Repository;
+using System.Text;
+using Common;
 
 namespace TodoApp.Extentions
 {
@@ -42,6 +45,31 @@ namespace TodoApp.Extentions
                     .AllowAnyMethod();
                 });
             });
+        }
+
+        // Authentication
+        public static void ConfigureAuth(this IServiceCollection services, string authName)
+        {
+            services.AddAuthentication(authName)
+                .AddJwtBearer(authName, options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("YourVeryStrongSecretKeyWith32Chars!"))
+                    };
+
+                });
+        }
+
+        // Jwt Service
+        public static void ConfigureJwtToken(this IServiceCollection services)
+        {
+            // services.AddSingleton(new JwtTokenGenerator("Test", "Test", "SecretKey"));
+            services.AddSingleton<IJwtTokenGenerator>(new JwtTokenGenerator("Test", "Test", "YourVeryStrongSecretKeyWith32Chars!"));
         }
 
         // Repositories

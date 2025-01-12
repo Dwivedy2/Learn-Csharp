@@ -23,5 +23,10 @@ namespace Repository
                 return _todoItems;
             }
         }
+
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
+        }
     }
 }

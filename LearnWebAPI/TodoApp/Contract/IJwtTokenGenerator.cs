@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Entities.Models;
 
 namespace Contract
 {
-    public interface ITodoItemsRepository : IRepositoryBase<TodoItem>
+    public interface IJwtTokenGenerator
     {
-        Task<IEnumerable<TodoItem>> GetAllItemsAsync();
+        string GenerateToken(string username, string role);
     }
 }
