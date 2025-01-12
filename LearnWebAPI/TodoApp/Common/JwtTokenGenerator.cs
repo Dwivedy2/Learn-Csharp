@@ -37,6 +37,8 @@ namespace Common
 
 
             var token = new JwtSecurityToken(
+                issuer: _issuer,
+                audience: _audience,
                 claims: claims,
                 expires: DateTime.UtcNow.AddMinutes(30),
                 signingCredentials: credentials);

@@ -13,7 +13,32 @@ namespace TodoApp.Extentions
         // Swagger 
         public static void ConfigureSwaggerGen(this IServiceCollection services)
         {
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(options =>
+            {
+                options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+                    Description = "Enter 'Bearer' [space] and then your token in the text input below.\nExample: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'"
+                });
+                options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+                {
+                    {
+                        new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+                        {
+                            Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                            {
+                                Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] {}
+                    }
+                });
+            });
         }
 
         public static void ConfigureSwaggerDoc(this IApplicationBuilder app)
@@ -51,7 +76,7 @@ namespace TodoApp.Extentions
         public static void ConfigureAuth(this IServiceCollection services, string authName)
         {
             services.AddAuthentication(authName)
-                .AddJwtBearer(authName, options =>
+                .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
@@ -59,6 +84,8 @@ namespace TodoApp.Extentions
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
+                        ValidIssuer = "https://yourissuer.com",
+                        ValidAudience = "https://youraudience.com",
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("YourVeryStrongSecretKeyWith32Chars!"))
                     };
 
@@ -69,7 +96,8 @@ namespace TodoApp.Extentions
         public static void ConfigureJwtToken(this IServiceCollection services)
         {
             // services.AddSingleton(new JwtTokenGenerator("Test", "Test", "SecretKey"));
-            services.AddSingleton<IJwtTokenGenerator>(new JwtTokenGenerator("Test", "Test", "YourVeryStrongSecretKeyWith32Chars!"));
+            services.AddSingleton<IJwtTokenGenerator>(new JwtTokenGenerator("https://yourissuer.com", 
+                "https://youraudience.com", "YourVeryStrongSecretKeyWith32Chars!"));
         }
 
         // Repositories

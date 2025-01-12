@@ -1,5 +1,6 @@
 ﻿using Contract;
 using Entities.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TodoApp.Controllers
@@ -28,6 +29,7 @@ namespace TodoApp.Controllers
             return Unauthorized("Invalid Username or Password");
         }
 
+        [Authorize]
         [HttpGet("all")]
         public async Task<IEnumerable<TodoItem>> GetAll()
         {
