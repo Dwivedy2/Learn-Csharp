@@ -12,7 +12,7 @@ namespace Repository
         {
             _context = context;
         }
-        public void Add(T entity) => _context.Set<T>().Add(entity);
+        public async Task AddAsync(T entity) => await _context.Set<T>().AddAsync(entity);
 
         public void Delete(T entity) => _context.Set<T>().Remove(entity);
 

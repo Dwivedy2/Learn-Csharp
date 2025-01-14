@@ -10,5 +10,9 @@ namespace Contract
     public interface ITodoItemsRepository : IRepositoryBase<TodoItem>
     {
         Task<IEnumerable<TodoItem>> GetAllItemsAsync();
+        Task<TodoItem> GetItemByIdAsync(Guid id);
+        Task<TodoItem> AddItemAsync(TodoItem item);
+        TodoItem UpdateItem(TodoItem item);
+        TodoItem DeleteItem(TodoItem item);
     }
 }
