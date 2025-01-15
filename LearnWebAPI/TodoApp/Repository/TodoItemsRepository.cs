@@ -12,6 +12,8 @@ namespace Repository
 
         public async Task<TodoItem> AddItemAsync(TodoItem item)
         {
+            item.DateCreated = DateTime.Now;
+
             await AddAsync(item);
             
             return item;

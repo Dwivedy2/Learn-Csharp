@@ -11,6 +11,8 @@ builder.Services.ConfigureSwaggerGen();
 builder.Services.ConfigureDbContext(builder.Configuration);
 // CORS
 builder.Services.ConfigureCORS("DefaultPolicy");
+//AutoMapper
+builder.Services.ConfigureAutoMapper();
 // Services
 builder.Services.ConfigureRepoServices();
 // Authentication Middleware

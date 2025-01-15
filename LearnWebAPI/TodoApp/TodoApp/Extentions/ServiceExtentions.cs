@@ -100,6 +100,12 @@ namespace TodoApp.Extentions
                 "https://youraudience.com", "YourVeryStrongSecretKeyWith32Chars!"));
         }
 
+        // Automapper
+        public static void ConfigureAutoMapper(this IServiceCollection services)
+        {
+            services.AddAutoMapper(typeof(Program));
+        }
+
         // Repositories
         public static void ConfigureRepoServices(this IServiceCollection services)
         {

@@ -1,5 +1,7 @@
-﻿using Common;
+﻿using AutoMapper;
+using Common;
 using Contract;
+using Entities.Dtos;
 using Entities.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,27 +12,31 @@ namespace TodoApp.Controllers
     [ApiController]
     public class TodoItemsController : ControllerBase
     {
-        IRepositoryWrapper _repoService;
+        private readonly IRepositoryWrapper _repoService;
+        private readonly IMapper _mapper;
 
-        public TodoItemsController(IRepositoryWrapper repoService)
+        public TodoItemsController(IRepositoryWrapper repoService,
+            IMapper mapper)
         {
             _repoService = repoService;
+            _mapper = mapper;
         }
 
         //[Authorize]
         [HttpGet("all")]
-        public async Task<ActionResult<ServiceResponse<IEnumerable<TodoItem>>>> GetAll()
+        public async Task<ActionResult<ServiceResponse<IEnumerable<GetTodoItemDto>>>> GetAll()
         {
-            var response = new ServiceResponse<IEnumerable<TodoItem>>();
+            var response = new ServiceResponse<IEnumerable<GetTodoItemDto>>();
             var allItems = await _repoService.TodoItems.GetAllItemsAsync();
-            var serviceResponse = response.GetResponse(allItems, "Success", true);
+            var itemToReturn = allItems.Select(item => _mapper.Map<GetTodoItemDto>(item));
+            var serviceResponse = response.GetResponse(itemToReturn, "Success", true);
             return serviceResponse.IsSuccessful ? Ok(serviceResponse) : NoContent();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ServiceResponse<TodoItem?>>> GetById(Guid id)
+        public async Task<ActionResult<ServiceResponse<GetTodoItemDto?>>> GetById(Guid id)
         {
-            var response = new ServiceResponse<TodoItem>();
+            var response = new ServiceResponse<GetTodoItemDto>();
             
             if (Guid.Empty == id)
             {
@@ -39,37 +45,43 @@ namespace TodoApp.Controllers
             
             var item = await _repoService.TodoItems.GetItemByIdAsync(id);
 
+            var itemToReturn = _mapper.Map<GetTodoItemDto>(item);
+
             if (item == null)
             {
-                return NotFound(response.GetResponse(item, $"No item exist for the id {id}"));
+                return NotFound(response.GetResponse(null, $"No item exist for the id {id}"));
             }
 
-            return Ok(response.GetResponse(item, "Success", true)); 
+            return Ok(response.GetResponse(itemToReturn, "Success", true)); 
         }
 
         [HttpPost("add/item")]
-        public async Task<ActionResult<ServiceResponse<TodoItem>>> AddTodoItem(TodoItem item)
+        public async Task<ActionResult<ServiceResponse<GetTodoItemDto>>> AddTodoItem(TodoItemDto itemDto)
         {
-            var response = new ServiceResponse<TodoItem>();
+            var response = new ServiceResponse<GetTodoItemDto>();
             
-            if (item == null || string.IsNullOrEmpty(item.Title))
+            if (itemDto == null || string.IsNullOrEmpty(itemDto.Title))
             {
                 return BadRequest(response.GetResponse(null, "Item or Title cannot be left empty"));
             }
             
-            var addedItem = await _repoService.TodoItems.AddItemAsync(item);
+            var mappedItem = _mapper.Map<TodoItem>(itemDto);
+
+            var addedItem = await _repoService.TodoItems.AddItemAsync(mappedItem);
 
             await _repoService.SaveChangesAsync();
 
-            return Ok(response.GetResponse(addedItem, "Item added successfully", true));
+            var itemToReturn = _mapper.Map<GetTodoItemDto>(addedItem);
+
+            return Ok(response.GetResponse(itemToReturn, "Item added successfully", true));
         }
 
         [HttpPut("update/{id}")]
-        public async Task<ActionResult<ServiceResponse<TodoItem>>> UpdateTodoItem(Guid id, TodoItem item)
+        public async Task<ActionResult<ServiceResponse<GetTodoItemDto>>> UpdateTodoItem(Guid id, TodoItemDto itemDto)
         {
-            var response = new ServiceResponse<TodoItem>();
+            var response = new ServiceResponse<GetTodoItemDto>();
 
-            if (Guid.Empty == id || item == null || string.IsNullOrEmpty(item.Title))
+            if (Guid.Empty == id || itemDto == null || string.IsNullOrEmpty(itemDto.Title))
             {
                 return BadRequest(response.GetResponse(null, "Item or Title cannot be left empty"));
             }
@@ -81,17 +93,21 @@ namespace TodoApp.Controllers
                 return BadRequest(response.GetResponse(null, $"Id is not registered {id}"));
             }
 
-            var updatedItem = _repoService.TodoItems.UpdateItem(item);
+            _mapper.Map(itemFromDb, itemDto);
+
+            var updatedItem = _repoService.TodoItems.UpdateItem(itemFromDb);
 
             await _repoService.SaveChangesAsync();
 
-            return Ok(response.GetResponse(updatedItem, "Item updated successfully", true));
+            var itemToReturn = _mapper.Map<GetTodoItemDto>(updatedItem);
+
+            return Ok(response.GetResponse(itemToReturn, "Item updated successfully", true));
         }
 
         [HttpDelete("delete/{id}")]
-        public async Task<ActionResult<ServiceResponse<TodoItem>>> DeleteTodoItem(Guid id) 
+        public async Task<ActionResult<ServiceResponse<GetTodoItemDto>>> DeleteTodoItem(Guid id) 
         {
-            var response = new ServiceResponse<TodoItem>();
+            var response = new ServiceResponse<GetTodoItemDto>();
 
             if (Guid.Empty == id)
             {
@@ -109,7 +125,9 @@ namespace TodoApp.Controllers
             
             await _repoService.SaveChangesAsync();
 
-            return Ok(response.GetResponse(deletedItem, "Item deleted successfully", true));
+            var itemToReturn = _mapper.Map<GetTodoItemDto>(deletedItem);
+
+            return Ok(response.GetResponse(itemToReturn, "Item deleted successfully", true));
         }
     }
 }
