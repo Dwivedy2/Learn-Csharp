@@ -76,23 +76,24 @@ namespace WebApiTests
         public async Task GetById_ShouldReturnOkObjectResult_WithItem()
         {
             // Arrange
-            Guid IdToTest = Guid.Parse("3699d388-561b-4f50-992b-a7506289e709");
+            Guid Id1 = Guid.Parse("3699d388-561b-4f50-992b-a7506289e709");
+            Guid Id2 = Guid.Parse("3699d388-561b-4f50-992b-a7506289e708");
+            Guid IdToTest = Id2;
             DateTime CurrentTime = DateTime.Now;
-
-            var todoItem = new TodoItem { Id = IdToTest, DateCreated = CurrentTime, IsCompleted = false, Title = "Task 1" };
+            TodoItem todoItemToTest = new TodoItem { Id = Id2, DateCreated = CurrentTime, IsCompleted = false, Title = "Task 2" };
 
             var getTodoItem = new GetTodoItemDto 
-            { Id = IdToTest, DateCreated = CurrentTime, IsCompleted = false, Title= "Task 1" };
+            { Id = IdToTest, DateCreated = CurrentTime, IsCompleted = false, Title= "Task 2" };
 
             _mockRepo.Setup(repo => repo.TodoItems.GetItemByIdAsync(IdToTest))
-                .ReturnsAsync(todoItem);
+                .ReturnsAsync(todoItemToTest);
 
             _mockMapper.Setup(mapper => mapper.Map<GetTodoItemDto>(It.IsAny<TodoItem>()))
                 .Returns((TodoItem source) => new GetTodoItemDto 
                 { Id = source.Id, Title = source.Title, DateCreated = source.DateCreated, IsCompleted = source.IsCompleted });
 
             // Act 
-            var result = await _controller.GetById(IdToTest);
+            var result = await _controller.GetByIdAsync(IdToTest);
 
             var okObjectResult = Assert.IsType<OkObjectResult>(result.Result);
 
@@ -106,5 +107,87 @@ namespace WebApiTests
             Assert.Equal(getTodoItem.IsCompleted, serviceResponse.Data.IsCompleted);
         }
 
+        [Fact]
+        public async Task GetById_ShouldReturnBadRequest_ForIncorrectFormatId()
+        {
+            // Arrange
+            Guid ItemIdToTest = Guid.Empty;
+            TodoItem emptyTodo = new TodoItem();
+
+            _mockRepo.Setup(repo => repo.TodoItems.GetItemByIdAsync(ItemIdToTest))
+                .ReturnsAsync(emptyTodo);
+
+            // Act
+            var result = await _controller.GetByIdAsync(ItemIdToTest);
+
+            // Assert
+            Assert.IsType<BadRequestObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public async Task GetById_ShouldReturnNotFound_ForIdNotExits()
+        {
+            // Arrange
+            Guid IdToTest = new Guid("0fecc3e0-183f-4f3f-affc-0587ab81f187");
+            var emptyTodoItem = new TodoItem();
+
+            _mockRepo.Setup(repo => repo.TodoItems.GetByIdAsync(IdToTest))
+                .ReturnsAsync(emptyTodoItem);
+
+            // Act
+            var result = await _controller.GetByIdAsync(IdToTest);
+
+            // Assert
+            Assert.IsType<NotFoundObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public async Task AddTodoItemAsync_ShouldReturnOkObjectResult_ForSingleTodoItem()
+        {
+            // Arrange
+            Guid id = Guid.NewGuid();
+            DateTime dateTime = DateTime.Now;
+            TodoItemDto itemDtoToAdd = new TodoItemDto { IsCompleted = false, Title = "New Item" };
+            TodoItem itemToAdd = new TodoItem
+            { 
+                Id = id, 
+                Title = itemDtoToAdd.Title, 
+                DateCreated = dateTime, 
+                IsCompleted = itemDtoToAdd.IsCompleted 
+            };
+            TodoItem addedItem = itemToAdd;
+            GetTodoItemDto returnTodoItem = new GetTodoItemDto
+            {
+                Id = id,
+                Title = itemDtoToAdd.Title,
+                DateCreated = dateTime,
+                IsCompleted = itemDtoToAdd.IsCompleted
+            };
+
+            _mockMapper.Setup(mapper => mapper.Map<TodoItem>(It.IsAny<TodoItemDto>()))
+                .Returns((TodoItemDto source) => new TodoItem
+                { Id = id, Title = source.Title, DateCreated = dateTime, IsCompleted = source.IsCompleted });
+
+            _mockRepo.Setup(repo => repo.TodoItems.AddItemAsync(itemToAdd))
+                .ReturnsAsync(addedItem);
+
+            _mockMapper.Setup(mapper => mapper.Map<GetTodoItemDto>(It.IsAny<TodoItem>()))
+                .Returns((TodoItem source) => new GetTodoItemDto 
+                { Id = id, Title = itemDtoToAdd.Title, DateCreated = dateTime, IsCompleted = itemDtoToAdd.IsCompleted });
+
+            // Act
+            var result = await _controller.AddTodoItemAsync(itemDtoToAdd);
+
+            var okResult = Assert.IsType<OkObjectResult>(result.Result);
+
+            var serviceResponse = Assert.IsType<ServiceResponse<GetTodoItemDto>>(okResult.Value);
+
+            // Assert
+            Assert.True(serviceResponse.IsSuccessful);
+            Assert.Equal(returnTodoItem.Id, serviceResponse.Data.Id);
+            Assert.Equal(returnTodoItem.Title, serviceResponse.Data.Title);
+            Assert.Equal(returnTodoItem.DateCreated, serviceResponse.Data.DateCreated);
+            Assert.Equal(returnTodoItem.IsCompleted, serviceResponse.Data.IsCompleted);
+        }
     }
 }

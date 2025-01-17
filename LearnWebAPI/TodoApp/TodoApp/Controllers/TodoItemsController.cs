@@ -40,7 +40,7 @@ namespace TodoApp.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ServiceResponse<GetTodoItemDto?>>> GetById(Guid id)
+        public async Task<ActionResult<ServiceResponse<GetTodoItemDto?>>> GetByIdAsync(Guid id)
         {
             var response = new ServiceResponse<GetTodoItemDto>();
             
@@ -62,7 +62,7 @@ namespace TodoApp.Controllers
         }
 
         [HttpPost("add/item")]
-        public async Task<ActionResult<ServiceResponse<GetTodoItemDto>>> AddTodoItem(TodoItemDto itemDto)
+        public async Task<ActionResult<ServiceResponse<GetTodoItemDto>>> AddTodoItemAsync(TodoItemDto itemDto)
         {
             var response = new ServiceResponse<GetTodoItemDto>();
             
@@ -83,7 +83,7 @@ namespace TodoApp.Controllers
         }
 
         [HttpPut("update/{id}")]
-        public async Task<ActionResult<ServiceResponse<GetTodoItemDto>>> UpdateTodoItem(Guid id, TodoItemDto itemDto)
+        public async Task<ActionResult<ServiceResponse<GetTodoItemDto>>> UpdateTodoItemAsync(Guid id, TodoItemDto itemDto)
         {
             var response = new ServiceResponse<GetTodoItemDto>();
 
@@ -112,7 +112,7 @@ namespace TodoApp.Controllers
         }
 
         [HttpDelete("delete/{id}")]
-        public async Task<ActionResult<ServiceResponse<GetTodoItemDto>>> DeleteTodoItem(Guid id) 
+        public async Task<ActionResult<ServiceResponse<GetTodoItemDto>>> DeleteTodoItemAsync(Guid id) 
         {
             var response = new ServiceResponse<GetTodoItemDto>();
 
