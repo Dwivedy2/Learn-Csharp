@@ -27,9 +27,15 @@ namespace TodoApp.Controllers
         public async Task<ActionResult<ServiceResponse<IEnumerable<GetTodoItemDto>>>> GetAll()
         {
             var response = new ServiceResponse<IEnumerable<GetTodoItemDto>>();
+
             var allItems = await _repoService.TodoItems.GetAllItemsAsync();
+
             var itemToReturn = allItems.Select(item => _mapper.Map<GetTodoItemDto>(item));
-            var serviceResponse = response.GetResponse(itemToReturn, "Success", true);
+
+            var serviceResponse = itemToReturn.Count() > 0 ? 
+                response.GetResponse(itemToReturn, "Success", true) : 
+                response.GetResponse(null, "No items in database");
+
             return serviceResponse.IsSuccessful ? Ok(serviceResponse) : NoContent();
         }
 
@@ -93,7 +99,8 @@ namespace TodoApp.Controllers
                 return BadRequest(response.GetResponse(null, $"Id is not registered {id}"));
             }
 
-            _mapper.Map(itemFromDb, itemDto);
+            itemFromDb.Title = itemDto.Title;
+            itemFromDb.IsCompleted = itemFromDb.IsCompleted;
 
             var updatedItem = _repoService.TodoItems.UpdateItem(itemFromDb);
 

@@ -9,7 +9,7 @@ namespace TodoApp
         public MappingProfile() 
         {
             CreateMap<TodoItem, TodoItemDto>().ReverseMap();
-            CreateMap<TodoItem, TodoItemDto>().ReverseMap();
+            CreateMap<TodoItem, GetTodoItemDto>().ReverseMap();
         }
     }
 }
