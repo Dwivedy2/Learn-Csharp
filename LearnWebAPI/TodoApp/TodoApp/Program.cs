@@ -1,3 +1,4 @@
+using CustomMiddlewares;
 using TodoApp.Extentions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,7 @@ builder.Services.ConfigureJwtToken();
 var app = builder.Build();
 
 // Activating Middleware
+app.UseMiddleware<UseHeaderInjection>();
 app.UseAuthentication();
 app.UseAuthorization();
 

@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contract", "Contract\Contra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{C1BBDA5A-5D44-493D-B426-466B5FEEC88D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiTests", "TestProject1\WebApiTests.csproj", "{C6534FBC-2EE6-45B9-8805-70E82A13A6F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiTests", "TestProject1\WebApiTests.csproj", "{C6534FBC-2EE6-45B9-8805-70E82A13A6F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomMiddlewares", "CustomMiddlewares\CustomMiddlewares.csproj", "{E9394EB2-9B7F-4BC8-85E8-CFD8C6E83C39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{C6534FBC-2EE6-45B9-8805-70E82A13A6F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6534FBC-2EE6-45B9-8805-70E82A13A6F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6534FBC-2EE6-45B9-8805-70E82A13A6F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9394EB2-9B7F-4BC8-85E8-CFD8C6E83C39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9394EB2-9B7F-4BC8-85E8-CFD8C6E83C39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9394EB2-9B7F-4BC8-85E8-CFD8C6E83C39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9394EB2-9B7F-4BC8-85E8-CFD8C6E83C39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
