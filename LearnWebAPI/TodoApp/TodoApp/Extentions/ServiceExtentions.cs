@@ -5,6 +5,7 @@ using Contract;
 using Repository;
 using System.Text;
 using Common;
+using CustomMiddlewares;
 
 namespace TodoApp.Extentions
 {
@@ -110,6 +111,16 @@ namespace TodoApp.Extentions
         public static void ConfigureRepoServices(this IServiceCollection services)
         {
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+            services.AddSingleton<ICustomLogService, CustomLogService>();
+        }
+
+        // Middlewares
+        public static void CustomUseMiddlewares(this WebApplication app)
+        {
+            app.UseMiddleware<UseHeaderInjection>();
+            app.UseMiddleware<UseLogging>();
+            app.UseMiddleware<UseShortCircuiting>();
+            app.UseMiddleware<UseCommonExceptionHandling>();
         }
     }
 }

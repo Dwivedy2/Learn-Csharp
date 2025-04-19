@@ -24,7 +24,8 @@ builder.Services.ConfigureJwtToken();
 var app = builder.Build();
 
 // Activating Middleware
-app.UseMiddleware<UseHeaderInjection>();
+app.CustomUseMiddlewares();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
