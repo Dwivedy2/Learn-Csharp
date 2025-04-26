@@ -6,6 +6,7 @@ using Repository;
 using System.Text;
 using Common;
 using CustomMiddlewares;
+using Common.Filters;
 
 namespace TodoApp.Extentions
 {
@@ -112,6 +113,8 @@ namespace TodoApp.Extentions
         {
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             services.AddSingleton<ICustomLogService, CustomLogService>();
+            services.AddScoped<LoggingFilter>();
+            services.AddScoped<ValidationFilter>();
         }
 
         // Middlewares
