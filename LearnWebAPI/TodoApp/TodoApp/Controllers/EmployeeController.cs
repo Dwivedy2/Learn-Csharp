@@ -8,6 +8,7 @@ namespace TodoApp.Controllers
     [ApiController]
     [ServiceFilter(typeof(LoggingFilter))]
     [ServiceFilter(typeof(ValidationFilter))]
+    [ServiceFilter(typeof(ExceptionFilter))]
     public class EmployeeController : ControllerBase
     {
         private static List<Employee> _employees;
@@ -18,6 +19,12 @@ namespace TodoApp.Controllers
             {
                 _employees = new List<Employee>();
             }
+        }
+
+        [HttpGet("error")]
+        public IActionResult Error()
+        {
+            throw new ArgumentException("Error: Unexpected Exception thrown at line 26.");
         }
 
         [HttpPost("add")]

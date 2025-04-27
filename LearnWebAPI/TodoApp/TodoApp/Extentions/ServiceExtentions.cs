@@ -115,6 +115,7 @@ namespace TodoApp.Extentions
             services.AddSingleton<ICustomLogService, CustomLogService>();
             services.AddScoped<LoggingFilter>();
             services.AddScoped<ValidationFilter>();
+            services.AddScoped<ExceptionFilter>();
         }
 
         // Middlewares
