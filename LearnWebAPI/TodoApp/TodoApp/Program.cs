@@ -1,3 +1,4 @@
+using Common.Filters;
 using CustomMiddlewares;
 using TodoApp.Extentions;
 
@@ -5,7 +6,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<LoggingFilter>();
+    options.Filters.Add<ValidationFilter>();
+    options.Filters.Add<ExceptionFilter>();
+});
 // Swagger
 builder.Services.ConfigureSwaggerGen();
 // Database

@@ -6,10 +6,8 @@ namespace TodoApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [ServiceFilter(typeof(LoggingFilter))]
-    [ServiceFilter(typeof(ValidationFilter))]
-    [ServiceFilter(typeof(ExceptionFilter))]
-    [ServiceFilter(typeof(AuthFilter))]
+    //[ServiceFilter(typeof(AuthFilter))]
+    [ServiceFilter(typeof(AuthActionFilter))]
     public class EmployeeController : ControllerBase
     {
         private static List<Employee> _employees;

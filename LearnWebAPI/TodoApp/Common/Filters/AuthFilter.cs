@@ -6,6 +6,9 @@ using System.Net;
 
 namespace Common.Filters
 {
+    // Not using as employee is coming as null, it is not set
+    // executing before the model is binded,
+    // instead perform this in actionfilter
     public class AuthFilter : IAuthorizationFilter
     {
         public void OnAuthorization(AuthorizationFilterContext context)
