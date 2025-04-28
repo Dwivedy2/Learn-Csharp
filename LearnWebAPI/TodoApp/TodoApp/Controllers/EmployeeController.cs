@@ -9,6 +9,7 @@ namespace TodoApp.Controllers
     [ServiceFilter(typeof(LoggingFilter))]
     [ServiceFilter(typeof(ValidationFilter))]
     [ServiceFilter(typeof(ExceptionFilter))]
+    [ServiceFilter(typeof(AuthFilter))]
     public class EmployeeController : ControllerBase
     {
         private static List<Employee> _employees;

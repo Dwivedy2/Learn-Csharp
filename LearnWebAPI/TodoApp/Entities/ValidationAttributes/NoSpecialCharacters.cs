@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Constants;
+using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
 namespace Entities.ValidationAttributes
@@ -11,7 +12,7 @@ namespace Entities.ValidationAttributes
                 return ValidationResult.Success;
 
             string val = value.ToString();
-            if (Regex.IsMatch(val, @"[^a-zA-Z0-9\s]"))
+            if (Regex.IsMatch(val, Expressions.SpecialCharacters))
             {
                 return new ValidationResult("No special characters are allowed");
             }

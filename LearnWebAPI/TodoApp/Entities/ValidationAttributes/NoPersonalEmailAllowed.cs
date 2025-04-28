@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Constants;
+using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
 namespace Entities.ValidationAttributes
@@ -13,7 +14,7 @@ namespace Entities.ValidationAttributes
             }
 
             string val = value.ToString();
-            if (Regex.IsMatch(val, @"^[\w.+\-]+@gmail\.com$"))
+            if (Regex.IsMatch(val, Expressions.GmailExpression))
             {
                 return new ValidationResult("gmails are not allowed");
             }

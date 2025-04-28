@@ -117,6 +117,7 @@ namespace TodoApp.Extentions
             services.AddScoped<LoggingFilter>();
             services.AddScoped<ValidationFilter>();
             services.AddScoped<ExceptionFilter>();
+            services.AddScoped<AuthFilter>();
         }
 
         // Suppress Model State Default

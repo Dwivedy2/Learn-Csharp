@@ -1,13 +1,6 @@
-﻿using Entities.ValidationAttributes;
+﻿using Constants.Enums;
+using Entities.ValidationAttributes;
 using System.ComponentModel.DataAnnotations;
-
-public enum Roles
-{
-    Developer,
-    QualityAssurance,
-    Devops,
-    ITIS,
-}
 
 namespace Entities.Models
 {
