@@ -20,5 +20,8 @@ namespace Entities.Models
         public Roles Role { get; set; }
         [Range(18, 65, ErrorMessage = "Age must be in between 18 and 65")]
         public int Age { get; set; }
+        [EmailAddress]
+        [NoPersonalEmailAllowed(ErrorMessage = "Provide only company email id")]
+        public string? Email { get; set; }
     }
 }

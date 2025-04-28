@@ -3,17 +3,19 @@ using System.Text.RegularExpressions;
 
 namespace Entities.ValidationAttributes
 {
-    public class NoSpecialCharacters : ValidationAttribute
+    public class NoPersonalEmailAllowed : ValidationAttribute
     {
-        protected override ValidationResult IsValid(object? value, ValidationContext context)
+        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
             if (value == null)
+            {
                 return ValidationResult.Success;
+            }
 
             string val = value.ToString();
-            if (Regex.IsMatch(val, @"[^a-zA-Z0-9\s]"))
+            if (Regex.IsMatch(val, @"^[\w.+\-]+@gmail\.com$"))
             {
-                return new ValidationResult("No special characters are allowed");
+                return new ValidationResult("gmails are not allowed");
             }
 
             return ValidationResult.Success;
