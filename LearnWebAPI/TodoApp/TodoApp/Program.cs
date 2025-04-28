@@ -16,6 +16,8 @@ builder.Services.ConfigureCORS("DefaultPolicy");
 builder.Services.ConfigureAutoMapper();
 // Services
 builder.Services.ConfigureRepoServices();
+// Suppress default model state
+builder.Services.ConfigureSuppressDefaultState();
 // Authentication Middleware
 builder.Services.ConfigureAuth("Bearer");
 builder.Services.AddAuthorization();
