@@ -44,7 +44,7 @@ app.ConfigureSwaggerDoc();
 app.UseCors("DefaultPolicy");
 
 // Global Exception Handler
-app.ConfigureGlobalExceptionHandler();
+//app.ConfigureGlobalExceptionHandler();
 
 app.UseHttpsRedirection();
 

@@ -3,13 +3,16 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Common.Filters
 {
-    public class LoggingFilter : IActionFilter
+    public class LoggingFilter : IActionFilter, IOrderedFilter
     {
         private readonly ICustomLogService _logger;
         public LoggingFilter(ICustomLogService logger)
         {
             _logger = logger;
         }
+
+        public int Order { get; set; } = 1;
+
         public void OnActionExecuted(ActionExecutedContext context)
         {
             _logger.Log(@$"Action Method Executed: {context.ActionDescriptor.DisplayName}

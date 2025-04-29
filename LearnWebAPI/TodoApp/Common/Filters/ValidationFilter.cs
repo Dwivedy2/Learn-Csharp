@@ -4,13 +4,16 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Common.Filters
 {
-    public class ValidationFilter : IActionFilter
+    public class ValidationFilter : IActionFilter, IOrderedFilter
     {
         private readonly ICustomLogService _logger;
         public ValidationFilter(ICustomLogService logger)
         {
             this._logger = logger;
         }
+
+        public int Order { get; set; } = 2;
+
         public void OnActionExecuted(ActionExecutedContext context)
         {
             _logger.Log($"Validation for {context.ActionDescriptor.DisplayName} is successfull");

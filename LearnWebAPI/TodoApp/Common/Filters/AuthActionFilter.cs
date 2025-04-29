@@ -6,8 +6,10 @@ using System.Net;
 
 namespace Common.Filters
 {
-    public class AuthActionFilter : IActionFilter
+    public class AuthActionFilter : IActionFilter, IOrderedFilter
     {
+        public int Order { get; set; } = 0;
+
         public void OnActionExecuted(ActionExecutedContext context)
         {
             Console.WriteLine("Executed");

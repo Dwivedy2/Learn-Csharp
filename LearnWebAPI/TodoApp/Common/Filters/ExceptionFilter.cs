@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Common.Filters
 {
-    public class ExceptionFilter : IExceptionFilter
+    public class ExceptionFilter : IExceptionFilter, IOrderedFilter
     {
         private readonly ICustomLogService _logger;
 
@@ -13,6 +13,9 @@ namespace Common.Filters
         {
             this._logger = logger;
         }
+
+        public int Order { get; set; } = 3;
+
         public void OnException(ExceptionContext context)
         {
             _logger.Log($"Exception occurred: {context.Exception.Message}");

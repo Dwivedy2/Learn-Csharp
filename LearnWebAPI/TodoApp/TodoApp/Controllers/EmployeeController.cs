@@ -7,7 +7,6 @@ namespace TodoApp.Controllers
     [Route("api/[controller]")]
     [ApiController]
     //[ServiceFilter(typeof(AuthFilter))]
-    [ServiceFilter(typeof(AuthActionFilter))]
     public class EmployeeController : ControllerBase
     {
         private static List<Employee> _employees;
@@ -26,6 +25,7 @@ namespace TodoApp.Controllers
             throw new ArgumentException("Error: Unexpected Exception thrown at line 26.");
         }
 
+        [ServiceFilter(typeof(AuthActionFilter))]
         [HttpPost("add")]
         public ActionResult<List<Employee>> AddEmployee([FromBody] Employee employee)
         {
