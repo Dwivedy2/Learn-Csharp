@@ -76,22 +76,23 @@ namespace TodoApp.Extentions
         }
 
         // Authentication
-        public static void ConfigureAuth(this IServiceCollection services, string authName)
+        public static void ConfigureAuth(this IServiceCollection services, string authName, WebApplicationBuilder builder)
         {
             services.AddAuthentication(authName)
-                .AddJwtBearer(options =>
+                .AddJwtBearer(authName, options =>
                 {
-                    options.TokenValidationParameters = new TokenValidationParameters
+                    options.TokenValidationParameters = new TokenValidationParameters()
                     {
                         ValidateIssuer = true,
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = "https://yourissuer.com",
-                        ValidAudience = "https://youraudience.com",
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("YourVeryStrongSecretKeyWith32Chars!"))
-                    };
 
+                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                        ValidAudience = builder.Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+                    };
                 });
         }
 

@@ -25,7 +25,7 @@ builder.Services.ConfigureRepoServices();
 // Suppress default model state
 builder.Services.ConfigureSuppressDefaultState();
 // Authentication Middleware
-//builder.Services.ConfigureAuth("Bearer");
+builder.Services.ConfigureAuth("Bearer", builder);
 builder.Services.AddAuthorization();
 builder.Services.ConfigureJwtToken();
 

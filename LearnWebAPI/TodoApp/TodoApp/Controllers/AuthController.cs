@@ -1,5 +1,6 @@
 ﻿using Contract;
 using Entities.Models;
+using Constants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -47,7 +48,7 @@ namespace TodoApp.Controllers
 
                 var token = _jwtService.GenerateToken(employee);
 
-                return Ok(new { Token = token });
+                return Ok(new { Token = $"{Literals.AUTH_NAME} {token}" });
             }
 
             return Unauthorized(new { Message = "Invalid Credentials"});
