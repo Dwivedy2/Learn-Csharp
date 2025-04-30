@@ -10,6 +10,7 @@ namespace TodoApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Developer")]
     public class TodoItemsController : ControllerBase
     {
         private readonly IRepositoryWrapper _repoService;

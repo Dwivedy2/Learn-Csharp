@@ -48,7 +48,7 @@ namespace TodoApp.Controllers
 
                 var token = _jwtService.GenerateToken(employee);
 
-                return Ok(new { Token = $"{Literals.AUTH_NAME} {token}" });
+                return Ok(new { Token = $"{token}" });
             }
 
             return Unauthorized(new { Message = "Invalid Credentials"});

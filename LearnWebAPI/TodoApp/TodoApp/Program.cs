@@ -27,7 +27,7 @@ builder.Services.ConfigureSuppressDefaultState();
 // Authentication Middleware
 builder.Services.ConfigureAuth("Bearer", builder);
 builder.Services.AddAuthorization();
-builder.Services.ConfigureJwtToken();
+//builder.Services.ConfigureJwtToken();
 
 var app = builder.Build();
 
