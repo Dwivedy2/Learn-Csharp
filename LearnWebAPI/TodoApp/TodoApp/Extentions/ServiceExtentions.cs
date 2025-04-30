@@ -114,6 +114,7 @@ namespace TodoApp.Extentions
         {
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             services.AddSingleton<ICustomLogService, CustomLogService>();
+            services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<LoggingFilter>();
             services.AddScoped<ValidationFilter>();
             services.AddScoped<ExceptionFilter>();
