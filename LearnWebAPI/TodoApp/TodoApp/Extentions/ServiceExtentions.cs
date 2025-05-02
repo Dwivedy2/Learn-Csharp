@@ -139,6 +139,8 @@ namespace TodoApp.Extentions
             app.UseMiddleware<UseLogging>();
             app.UseMiddleware<UseShortCircuiting>();
             app.UseMiddleware<UseCommonExceptionHandling>();
+            app.UseMiddleware<JwtMiddleware>();
+            app.UseMiddleware<RoleAuthMiddleware>();
         }
     }
 }
