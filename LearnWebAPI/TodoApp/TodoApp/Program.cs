@@ -1,5 +1,6 @@
 using Common.Filters;
 using CustomMiddlewares;
+using System.Security.Claims;
 using TodoApp.Extentions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,7 +27,11 @@ builder.Services.ConfigureRepoServices();
 builder.Services.ConfigureSuppressDefaultState();
 // Authentication Middleware
 builder.Services.ConfigureAuth("Bearer", builder);
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(option =>
+{
+    option.AddPolicy("ManagerPolicy", policy => policy.RequireRole("Manager"));
+    option.AddPolicy("DeveloperPolicy", policy => policy.RequireRole("Developer"));
+});
 //builder.Services.ConfigureJwtToken();
 
 var app = builder.Build();

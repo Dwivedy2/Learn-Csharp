@@ -8,6 +8,7 @@ using System.Security.Claims;
 using Entities.Models;
 using Constants.Enums;
 using Constants;
+using Entities.Dtos;
 
 namespace CustomMiddlewares
 {
@@ -60,11 +61,11 @@ namespace CustomMiddlewares
                 var jwtToken = (JwtSecurityToken)validationToken;
                 var name = jwtToken.Claims.First(x => x.Type == ClaimTypes.Name).Value;
                 var role = jwtToken.Claims.First(x => x.Type == ClaimTypes.Role).Value;
-
-                var employee = new
+                
+                var employee = new AuthEmployee
                 {
                     Name = name,
-                    Role = Enum.Parse(typeof(Roles), role),
+                    Role = (Roles)Enum.Parse(typeof(Roles), role),
                 };
 
                 http.Items["Employee"] = employee;

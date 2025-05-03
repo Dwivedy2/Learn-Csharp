@@ -3,6 +3,7 @@ using Constants.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using Entities.Dtos;
 
 namespace CustomMiddlewares
 {
@@ -17,7 +18,7 @@ namespace CustomMiddlewares
 
         public async Task InvokeAsync(HttpContext http)
         {
-            var employee = http.Items["Employee"] as Employee;
+            var employee = http.Items["Employee"] as AuthEmployee;
 
             if (employee == null)
             {
@@ -28,7 +29,7 @@ namespace CustomMiddlewares
             if (employee.Role != Roles.Manager)
             {
                 http.Response.StatusCode = (int)HttpStatusCode.Forbidden;
-                await http.Response.WriteAsync("User doesn't have required permission");
+                await http.Response.WriteAsync((new { Message = "User doesn't have required permission" }).ToString());
                 return;
             }
 
