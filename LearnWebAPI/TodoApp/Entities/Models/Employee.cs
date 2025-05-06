@@ -6,7 +6,7 @@ namespace Entities.Models
 {
     public class Employee
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Required(ErrorMessage = "Name is required")]
         [NoSpecialCharacters(ErrorMessage = "No special characters are allowed for name")]
         public string? Name { get; set; }
