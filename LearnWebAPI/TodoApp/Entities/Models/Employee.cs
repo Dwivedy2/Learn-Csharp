@@ -6,7 +6,7 @@ namespace Entities.Models
 {
     public class Employee
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         [Required(ErrorMessage = "Name is required")]
         [NoSpecialCharacters(ErrorMessage = "No special characters are allowed for name")]
         public string? Name { get; set; }
@@ -16,5 +16,8 @@ namespace Entities.Models
         [EmailAddress]
         [NoPersonalEmailAllowed(ErrorMessage = "Provide only company email id")]
         public string? Email { get; set; }
+
+        public ICollection<EmployeeSkills> EmployeeSkills { get; set; }
+        public ICollection<EmployeeProjects> EmployeeProjects { get; set; }
     }
 }

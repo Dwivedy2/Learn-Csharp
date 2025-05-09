@@ -44,6 +44,23 @@ namespace TodoApp.Controllers
             return Ok(emp);
         }
 
+        [HttpGet("employee/{skillId}")]
+        public IActionResult GetEmployeeBySkillId(int skillId) 
+        {
+            if (skillId <= 0)
+            {
+                return BadRequest("Invalid skill id");
+            }
+
+            var employees = _context.Employees
+                                        .Include(e => e.EmployeeSkills)
+                                        .ThenInclude(e => e.Skill)
+                                        .Where(e => e.EmployeeSkills.Any(es => es.SkillId == skillId))
+                                        .ToList();
+
+            return Ok(employees);
+        }
+
         //[ServiceFilter(typeof(AuthActionFilter))]
         [HttpPost("add")]
         public async Task<IActionResult> AddEmployee([FromBody] Employee employee)

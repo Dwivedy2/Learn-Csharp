@@ -10,6 +10,7 @@ namespace TodoApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Manager")]
     public class TodoItemsController : ControllerBase
     {
         private readonly IRepositoryWrapper _repoService;
@@ -22,7 +23,6 @@ namespace TodoApp.Controllers
             _mapper = mapper;
         }
 
-        [Authorize(Roles = "Developer")]
         [HttpGet("all")]
         public async Task<ActionResult<ServiceResponse<IEnumerable<GetTodoItemDto>>>> GetAll()
         {
@@ -40,7 +40,6 @@ namespace TodoApp.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "Developer")]
         public async Task<ActionResult<ServiceResponse<GetTodoItemDto?>>> GetByIdAsync(Guid id)
         {
             var response = new ServiceResponse<GetTodoItemDto>();
@@ -63,7 +62,6 @@ namespace TodoApp.Controllers
         }
 
         [HttpPost("add/item")]
-        [Authorize(Roles = "Manager")]
         public async Task<ActionResult<ServiceResponse<GetTodoItemDto>>> AddTodoItemAsync(TodoItemDto itemDto)
         {
             var response = new ServiceResponse<GetTodoItemDto>();
@@ -85,7 +83,6 @@ namespace TodoApp.Controllers
         }
 
         [HttpPut("update/{id}")]
-        [Authorize(Roles = "Manager")]
         public async Task<ActionResult<ServiceResponse<GetTodoItemDto>>> UpdateTodoItemAsync(Guid id, TodoItemDto itemDto)
         {
             var response = new ServiceResponse<GetTodoItemDto>();
@@ -115,7 +112,6 @@ namespace TodoApp.Controllers
         }
 
         [HttpDelete("delete/{id}")]
-        [Authorize(Roles = "Manager")]
         public async Task<ActionResult<ServiceResponse<GetTodoItemDto>>> DeleteTodoItemAsync(Guid id) 
         {
             var response = new ServiceResponse<GetTodoItemDto>();

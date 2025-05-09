@@ -1,0 +1,11 @@
+﻿namespace Entities.Models
+{
+    public class EmployeeSkills
+    {
+        public int Id { get; set; }
+        public int EmployeeId { get; set; }
+        public Employee Employee { get; set; }
+        public int SkillId { get; set; }
+        public Skill Skill { get; set; }
+    }
+}

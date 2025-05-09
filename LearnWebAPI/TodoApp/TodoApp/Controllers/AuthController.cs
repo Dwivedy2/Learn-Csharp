@@ -31,7 +31,7 @@ namespace TodoApp.Controllers
                 Name = "Om",
                 Age = 25,
                 Email = "Om@outlook.com",
-                Id = Guid.NewGuid(),
+                Id = 10,
                 Role = Constants.Enums.Roles.Developer
             };
 
