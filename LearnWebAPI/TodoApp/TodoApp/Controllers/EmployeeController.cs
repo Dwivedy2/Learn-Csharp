@@ -52,11 +52,10 @@ namespace TodoApp.Controllers
                 return BadRequest("Invalid skill id");
             }
 
-            var employees = _context.Employees
-                                        .Include(e => e.EmployeeSkills)
-                                        .ThenInclude(e => e.Skill)
-                                        .Where(e => e.EmployeeSkills.Any(es => es.SkillId == skillId))
-                                        .ToList();
+            var employees = _context.EmployeeSkills
+                .Where(es => es.SkillId == skillId)
+                .Select(e => e.Employee)
+                .ToList();
 
             return Ok(employees);
         }
