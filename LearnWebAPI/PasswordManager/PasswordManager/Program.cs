@@ -5,6 +5,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+builder.Services.UseSwaggerG();
+
 builder.Services.ConfigureDb(builder.Configuration);
 
 var app = builder.Build();
@@ -14,6 +17,8 @@ var app = builder.Build();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseSwaggerDoc();
 
 app.MapControllers();
 

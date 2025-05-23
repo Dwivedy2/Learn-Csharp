@@ -11,5 +11,19 @@ namespace PasswordManager.Extention
 
             services.AddDbContext<ApplicationContext>(opt => opt.UseSqlServer(connectionString));
         }
+
+        public static void UseSwaggerG(this IServiceCollection services)
+        {
+            services.AddSwaggerGen();
+        }
+
+        public static void UseSwaggerDoc(this IApplicationBuilder app)
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("v1/swagger.json", "PasswordManager");
+            });
+        }
     }
 }
