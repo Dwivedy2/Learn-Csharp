@@ -10,16 +10,22 @@ namespace PasswordManager.Controllers
     public class UserController : ControllerBase
     {
         private readonly ApplicationContext context;
+        private readonly ILogger<UserController> logger;
 
-        public UserController(ApplicationContext context)
+        public UserController(ApplicationContext context, ILogger<UserController> logger)
         {
             this.context = context;
+            this.logger = logger;
         }
 
         [HttpGet("getall")]
         public ActionResult<ICollection<User>> GetAll()
         {
-            return context.Users.ToList();
+            logger.LogDebug($"Debugger log printed");
+
+            throw new ArgumentException("Throwing error to test middleware");
+
+            return Ok(context.Users.ToList());
         }
     }
 }

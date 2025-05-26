@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PasswordManager.Custom.Middleware;
 using PasswordManager.Database;
+using Serilog;
 
 namespace PasswordManager.Extention
 {
@@ -24,6 +26,22 @@ namespace PasswordManager.Extention
             {
                 c.SwaggerEndpoint("v1/swagger.json", "PasswordManager");
             });
+        }
+
+        public static void ConfigureSeriLog(this IServiceCollection services, WebApplicationBuilder builder)
+        {
+            var logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(builder.Configuration)
+                .Enrich.FromLogContext()
+                .CreateLogger();
+
+            builder.Logging.ClearProviders();
+            builder.Logging.AddSerilog(logger);
+        }
+
+        public static void UseCustomMiddleware(this WebApplication app)
+        {
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
         }
     }
 }

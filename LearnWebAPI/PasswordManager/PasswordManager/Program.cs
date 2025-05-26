@@ -1,4 +1,5 @@
 using PasswordManager.Extention;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services.UseSwaggerG();
+
+builder.Services.ConfigureSeriLog(builder);
 
 builder.Services.ConfigureDb(builder.Configuration);
 
@@ -17,6 +20,8 @@ var app = builder.Build();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCustomMiddleware();
 
 app.UseSwaggerDoc();
 
