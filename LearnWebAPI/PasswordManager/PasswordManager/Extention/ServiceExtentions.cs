@@ -1,6 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using PasswordManager.Custom.Middleware;
 using PasswordManager.Database;
+using PasswordManager.Interfaces;
+using PasswordManager.Services;
 using Serilog;
 
 namespace PasswordManager.Extention
@@ -26,6 +29,11 @@ namespace PasswordManager.Extention
             {
                 c.SwaggerEndpoint("v1/swagger.json", "PasswordManager");
             });
+        }
+
+        public static void ConfigureServices(this IServiceCollection services)
+        {
+            services.AddScoped<IPasswordHasher, PasswordHasher>();
         }
 
         public static void ConfigureSeriLog(this IServiceCollection services, WebApplicationBuilder builder)
